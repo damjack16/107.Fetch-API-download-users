@@ -1,5 +1,6 @@
 const template = document.querySelector('#template');
-const usersList = document.querySelector('#usersList')
+const usersList = document.querySelector('#usersList');
+
 
 fetch("https://jsonplaceholder.typicode.com/users")
     .then(resp =>
@@ -16,9 +17,37 @@ fetch("https://jsonplaceholder.typicode.com/users")
             userName.innerHTML = user.name;
             // Find element with class "address" in template content
             const address = clone.querySelector('.address');
-            // Inser phone and email of each user in API to div with class "address"
+            // Insert phone and email of each user in API to div with class "address"
             address.innerHTML = `Phone: ${user.phone}<br>
-            email: <a href="mailto: ${user.email}">${user.email}</a>`
+            email: <a href="mailto: ${user.email}">${user.email}</a>`;
+            const ulList = clone.querySelector(".user-posts");
+
+            // Show posts
+            const btn = clone.querySelector('.btn');
+
+            btn.addEventListener('click', () => {
+                fetch("https://jsonplaceholder.typicode.com/posts")
+                    .then(resp =>
+                        resp.json()
+                    )
+                    .then(resp => {
+                        resp.forEach(news => {
+                            // Clone post template content
+                            const clone = document.importNode(post.content, true);
+                            // Find element with class "post-title" in post template content
+                            const postTitle = clone.querySelector('.post-title');
+                            // Insert title of each post in API to h3
+                            postTitle.innerHTML = news.title;
+                            // Find element with class "post-body" in post template content
+                            const postBody = clone.querySelector('.post-body');
+                            // Insert body post of each post in API to div with class "post-body"
+                            postBody.innerHTML = news.body;
+                            ulList.style.display = "block";
+                            ulList.appendChild(clone);
+                        })
+                    })
+            });
+
             // Add cloned template content to div with id #usersList
             usersList.appendChild(clone);
         })
