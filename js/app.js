@@ -15,18 +15,23 @@ fetch("https://jsonplaceholder.typicode.com/users")
             const userName = clone.querySelector('.user-name');
             // Insert name of each user in API to h2
             userName.innerHTML = user.name;
+            // Find element with class "user-cnt" in template content
+            const article = clone.querySelector('.user-cnt');
+            // Set data-id from API
+            article.dataset.id = `${user.id}`;
             // Find element with class "address" in template content
             const address = clone.querySelector('.address');
             // Insert phone and email of each user in API to div with class "address"
             address.innerHTML = `Phone: ${user.phone}<br>
             email: <a href="mailto: ${user.email}">${user.email}</a>`;
+
             const ulList = clone.querySelector(".user-posts");
 
             // Show posts
             const btn = clone.querySelector('.btn');
 
             btn.addEventListener('click', () => {
-                fetch("https://jsonplaceholder.typicode.com/posts")
+                fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`)
                     .then(resp =>
                         resp.json()
                     )
@@ -42,7 +47,24 @@ fetch("https://jsonplaceholder.typicode.com/users")
                             const postBody = clone.querySelector('.post-body');
                             // Insert body post of each post in API to div with class "post-body"
                             postBody.innerHTML = news.body;
-                            ulList.style.display = "block";
+                            // Change display value to show ulList
+                            let flag = true;
+
+                            if (ulList.dataset.visible === "false") {
+                                flag = !flag;
+                            } else if (ulList.dataset.visible === "true") {
+                                flag = !flag;
+                            }
+
+                            if (flag) {
+                                ulList.style.display = "none";
+                                btn.innerHTML = "Show posts";
+                                ulList.dataset.visible = "false"
+                            } else {
+                                ulList.dataset.visible = "true"
+                                ulList.style.display = "block";
+                                btn.innerHTML = "Hide posts";
+                            }
                             ulList.appendChild(clone);
                         })
                     })

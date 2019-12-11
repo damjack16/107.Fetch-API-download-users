@@ -16,26 +16,30 @@
     </div>
 
     <template id="template">
-        <h2 class="user-name">{{userName}}</h2>
-        <div class="address">
-            Phone: {{phone}}<br>
-            email: <a href="mailto: {{email}}">{{email}}</a>
-        </div>
+        <article class="user-cnt" data-id="">
+            <h2 class="user-name">{{userName}}</h2>
+            <div class="address">
+                Phone: {{phone}}<br>
+                email: <a href="mailto: {{email}}">{{email}}</a>
+            </div>
 
-        <button type="button" class="btn show-posts">
-            Show posts
-        </button>
+            <button type="button" class="btn show-posts">
+                Show posts
+            </button>
 
-        <ul class="user-posts">
-            <!-- tutaj będą posty użytkownika -->
-        </ul>
+            <ul class="user-posts" data-visible="false">
+                <!-- tutaj będą posty użytkownika -->
+            </ul>
+        </article>
     </template>
 
     <template id="post">
-        <h3 class="post-title">{{title}}</h3>
-        <div class="post-body">
-            {{body}}
-        </div>
+        <li class="post">
+            <h3 class="post-title">{{title}}</h3>
+            <div class="post-body">
+                {{body}}
+            </div>
+        </li>
     </template>
 </body>
 
